@@ -1,3 +1,5 @@
+<div align="center">
+
 # AI Sandbox
 
 [![CI](https://github.com/fisheatfish/ai-sandbox/actions/workflows/ci.yml/badge.svg)](https://github.com/fisheatfish/ai-sandbox/actions/workflows/ci.yml)
@@ -5,6 +7,8 @@
 A Docker sandbox for developers who want to explore and experiment with AI coding tools like **Claude Code** in an isolated, reproducible environment.
 
 ![AI Sandbox Demo](docs/demo.gif)
+
+</div>
 
 ## What's Inside
 
