@@ -29,7 +29,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | \
 # Cleaning the cache, update npm, install MCP CLI tools
 RUN npm cache clean --force \
  && npm install -g npm@11.11.1 \
- && npm install -g backlog.md@1.44.0
+ && npm install -g backlog.md@1.45.1
 
 # Install Rust to system paths
 ENV RUSTUP_HOME=/usr/local/rustup
