@@ -174,6 +174,7 @@ environment:
 
 - [ ] Add a startup script to automate git config inside the container
 - [ ] Support additional AI coding tools (Codex, Gemini CLI, etc.)
+- [ ] Move the per-project `.venv-docker` virtualenvs off the bind mount onto a native Docker volume.
 
 ## Contributing
 

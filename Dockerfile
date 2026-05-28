@@ -8,6 +8,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-reco
     curl \
     ca-certificates \
     unzip \
+    make \
     python3 python3-venv python3-pip \
  && rm -rf /var/lib/apt/lists/*
 
@@ -29,6 +30,13 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | \
 RUN npm cache clean --force \
  && npm install -g npm@11.11.1 \
  && npm install -g backlog.md@1.44.0
+
+# Install Rust to system paths
+ENV RUSTUP_HOME=/usr/local/rustup
+ENV CARGO_HOME=/usr/local/cargo
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path \
+ && chmod -R a+rx /usr/local/rustup /usr/local/cargo
+ENV PATH="/usr/local/cargo/bin:${PATH}"
 
 # Non-root user (security)
 RUN useradd -m aiuser

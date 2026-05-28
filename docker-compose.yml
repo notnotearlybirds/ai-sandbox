@@ -11,10 +11,9 @@ services:
       - ${SANDBOX_WORKSPACE}/workspace:/workspace
       - ${SANDBOX_WORKSPACE}/ai-cli-data/:/home/aiuser/
     working_dir: /workspace
-    depends_on:
-      - ollama
-      - otel-collector
     environment:
+      - UV_PROJECT_ENVIRONMENT=.venv-docker
+      - UV_LINK_MODE=copy
       - OLLAMA_HOST=http://ollama:11434
       - CLAUDE_CODE_ENABLE_TELEMETRY=1              # Enable OTel
       - OTEL_METRICS_EXPORTER=otlp                  # ou prometheus, console
@@ -24,42 +23,3 @@ services:
 
     env_file:
       - .env
-
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama:/root/.ollama
-  otel-collector:
-    image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector:0.142.0
-    container_name: otel-collector
-    command: ["--config=/otel-local-config.yaml"]
-    volumes:
-      - ./observability/otel-collector-config.yaml:/otel-local-config.yaml
-    ports:
-      - "4317:4317"   # OTLP gRPC
-      - "9464:9464"   # metrics exposed for Prometheus
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml
-    depends_on:
-      - otel-collector
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
-    volumes:
-      - grafana-data:/var/lib/grafana
-
-volumes:
-  ollama:
-  grafana-data:
