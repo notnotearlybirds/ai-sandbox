@@ -30,3 +30,38 @@ CVE-2023-45853
 
 # Python3-setuptools-whl path traversal via malicious tar archives - no fix available yet
 CVE-2026-23949
+
+# curl / libcurl - SMB connection reuse and cookie leak - no fix available in Debian 13
+CVE-2026-5773
+CVE-2026-6276
+
+# libexpat - DoS via crafted XML - no fix available in Debian 13
+CVE-2026-45186
+
+# ncurses - buffer overflow - no fix available in Debian 13
+CVE-2025-69720
+
+# perl / Archive::Tar - symlink/hardlink traversal and memory exhaustion - no fix available in Debian 13
+CVE-2026-42496
+CVE-2026-42497
+CVE-2026-8376
+CVE-2026-9538
+
+# Python 3.13 - insufficient entropy in xml parsers - no fix available in Debian 13
+CVE-2026-7210
+
+# libssh2 - integer overflow via large credentials - no fix available in Debian 13
+CVE-2026-7598
+
+# python3-pip - path traversal via malicious wheel - no fix available in Debian 13
+CVE-2026-8643
+
+# picomatch - transitive dep of backlog.md, not yet updated upstream
+CVE-2026-33671
+
+# GitPython / urllib3 - transitive deps from third-party install scripts (claude.ai, vibe), no fix path without patching
+CVE-2026-44243
+CVE-2026-44244
+GHSA-mv93-w799-cj2w
+CVE-2026-44431
+CVE-2026-44432
