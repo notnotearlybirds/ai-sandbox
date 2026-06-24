@@ -14,12 +14,6 @@ services:
     environment:
       - UV_PROJECT_ENVIRONMENT=.venv-docker
       - UV_LINK_MODE=copy
-      - OLLAMA_HOST=http://ollama:11434
-      - CLAUDE_CODE_ENABLE_TELEMETRY=1              # Enable OTel
-      - OTEL_METRICS_EXPORTER=otlp                  # ou prometheus, console
-      - OTEL_LOGS_EXPORTER=otlp                     # ou console
-      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
 
     env_file:
       - .env

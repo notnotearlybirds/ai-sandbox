@@ -12,9 +12,7 @@ A Docker sandbox for developers who want to explore and experiment with AI codin
 
 ## What's Inside
 
-- **ai-sandbox**: Node.js 20 container with Claude Code CLI and [RTK](https://github.com/rtk-ai/rtk) pre-installed
-- **Ollama**: Local LLM support for open-source models
-- **Observability stack**: OpenTelemetry Collector, Prometheus, and Grafana
+- **ai-sandbox**: Node.js 22 container with Claude Code CLI, [RTK](https://github.com/rtk-ai/rtk), and [Pi](https://pi.dev) pre-installed
 
 ## Prerequisites
 
@@ -61,14 +59,6 @@ docker-compose up -d
 docker exec -it ai-sandbox bash
 ```
 
-## Interfaces
-
-| Service | URL |
-|---------|-----|
-| Grafana | http://localhost:3000 |
-| Prometheus | http://localhost:9090 |
-| Ollama | http://localhost:11434 |
-
 ## Quick Access Alias
 
 ```bash
@@ -95,27 +85,10 @@ graph TB
         ws["/workspace - Your projects"]
     end
 
-    subgraph observability["Observability Stack"]
-        otlp["OTel Collector<br/>Port: 4317"]
-        prom["Prometheus<br/>Port: 9090"]
-        grafana["Grafana<br/>Port: 3000"]
-
-        otlp -->|Metrics| prom
-        prom -->|Visualize| grafana
-    end
-
-    subgraph llm["Local LLM"]
-        ollama["Ollama<br/>Port: 11434"]
-    end
-
-    ai_sandbox -->|OTLP gRPC| otlp
     ai_sandbox -->|Mount| ws
-    ai_sandbox -->|Requests| ollama
 
     style ai_sandbox fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#000
     style workspace fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
-    style observability fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000
-    style llm fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000
 ```
 
 ## Autonomous Git Push
@@ -149,30 +122,16 @@ rtk init -g
 
 Once the hook is installed, commands like `git status` are automatically rewritten to `rtk git status` — Claude never sees the transformation.
 
-## Using Ollama for Local Models
+## Codeburn (Token Spend Analytics)
+
+[Codeburn](https://github.com/codeburn-io/codeburn) reads Claude Code session data to show where your AI spend goes. Since sessions run inside the container, you need to expose them to your host:
 
 ```bash
-# From inside the container
-curl http://ollama:11434/api/tags    # List models
-ollama run mistral                    # Run a model
+# On your host — symlink the container's .claude data to your local home
+ln -sf ${SANDBOX_WORKSPACE}/ai-cli-data/.claude ~/.claude
 ```
 
-## Observability
-
-| Component | Port | Config |
-|-----------|------|--------|
-| OTel Collector | 4317 (gRPC) | [otel-collector-config.yaml](observability/otel-collector-config.yaml) |
-| Prometheus | 9090 | [prometheus.yml](observability/prometheus.yml) |
-| Grafana | 3000 | Volume: `grafana-data` |
-
-Enable telemetry in `docker-compose.yml`:
-
-```yaml
-environment:
-  - CLAUDE_CODE_ENABLE_TELEMETRY=1
-  - OTEL_METRICS_EXPORTER=otlp
-  - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
-```
+This works because `docker-compose.yml` mounts `ai-cli-data/` as `/home/aiuser/`, so all session data persists there. The symlink lets codeburn (running on the host) read it directly.
 
 ## Codeburn (Token Spend Analytics)
 
