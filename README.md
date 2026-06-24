@@ -174,6 +174,17 @@ environment:
   - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
 ```
 
+## Codeburn (Token Spend Analytics)
+
+[Codeburn](https://github.com/codeburn-io/codeburn) reads Claude Code session data to show where your AI spend goes. Since sessions run inside the container, you need to expose them to your host:
+
+```bash
+# On your host — symlink the container's .claude data to your local home
+ln -sf ${SANDBOX_WORKSPACE}/ai-cli-data/.claude ~/.claude
+```
+
+This works because `docker-compose.yml` mounts `ai-cli-data/` as `/home/aiuser/`, so all session data persists there. The symlink lets codeburn (running on the host) read it directly.
+
 ## TODO / Roadmap
 
 - [ ] Add a startup script to automate git config inside the container
