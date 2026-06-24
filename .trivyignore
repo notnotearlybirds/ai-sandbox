@@ -65,3 +65,19 @@ CVE-2026-44244
 GHSA-mv93-w799-cj2w
 CVE-2026-44431
 CVE-2026-44432
+
+# jq / libjq1 - no fix available in Debian 13
+CVE-2026-49839
+
+# libexpat1 - large dynamic allocation DoS - no fix available in Debian 13
+CVE-2025-59375
+
+# perl / libperl5.40 / perl-base / perl-modules-5.40 - arbitrary code execution via output glob - no fix available in Debian 13
+CVE-2026-48962
+
+# libsqlite3-0 - memory corruption and heap buffer overflow - no fix available in Debian 13
+CVE-2026-11822
+CVE-2026-11824
+
+# libssh2 - out-of-bounds write via unchecked packet_length - no fix available in Debian 13
+CVE-2026-55200
