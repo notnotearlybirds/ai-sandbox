@@ -6,7 +6,7 @@ Thank you for wanting to contribute to this project!
 
 - **Simplicity**: Minimal configuration to get started quickly
 - **Reproducibility**: Same environment on all machines
-- **Observability**: Complete stack for monitoring experiments
+- **Lightweight**: No unnecessary services or infrastructure
 - **Security**: Non-root user, no hardcoded credentials
 
 ## Git Workflow
@@ -21,7 +21,7 @@ git checkout -b feat/my-feature
 
 Branch naming:
 - `feat/add-mcp-servers` - new features
-- `fix/prometheus-scrape` - bug fixes
+- `fix/docker-build` - bug fixes
 - `docs/update-readme` - documentation
 - `chore/update-dependencies` - maintenance
 
